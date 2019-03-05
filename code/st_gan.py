@@ -154,8 +154,6 @@ def generator_stim_ctrl(image,  reuse=False):
         h = tf.layers.batch_normalization(h, axis=1, training=is_training)
         h = tf.nn.relu(h)
         return h
-
-
 def generator_ctrl_stim(image, reuse=False,):
     with tf.variable_scope("generator_bs",reuse = reuse):
         h = tf.layers.dense(inputs=image, units=700, kernel_initializer=initializer, use_bias=False)
@@ -188,8 +186,6 @@ def generator_ctrl_stim(image, reuse=False,):
         h = tf.nn.relu(h)
 
         return h
-
-
 # generator and discriminator
 
 gen_stim_fake = generator_ctrl_stim(X_ctrl)
@@ -199,7 +195,7 @@ recon_ctrl = generator_stim_ctrl(gen_stim_fake, reuse=True)
 recon_stim = generator_ctrl_stim(gen_ctrl_fake, reuse=True)
 
 disc_ctrl_fake, _ = discriminator_control(gen_ctrl_fake)
-disc_stim_fake, _ =  disc_s = discriminator_stimulated(gen_stim_fake)
+disc_stim_fake, _ = discriminator_stimulated(gen_stim_fake)
 
 disc_ctrl_real, disc_c = discriminator_control(X_ctrl, reuse=True)
 disc_stim_real, disc_s= discriminator_stimulated(X_stim, reuse=True)
@@ -224,24 +220,16 @@ gen_sb_variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope="ge
 gen_bs_variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope="generator_bs")
 dis_s_variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope="discriminator_s")
 dis_b_variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope="discriminator_b")
-
-
-
 with tf.control_dependencies(tf.get_collection(tf.GraphKeys.UPDATE_OPS)):
     update_D = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(disc_loss,
                                                                                var_list=dis_s_variables + dis_b_variables,
                                                                             )
     update_G = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(gen_loss,
                                                                                var_list=gen_sb_variables + gen_bs_variables)
-
 global_step = tf.Variable(0, name='global_step', trainable=False, dtype=tf.int32)
-
-
-sess=tf.InteractiveSession()
+sess = tf.InteractiveSession()
 saver = tf.train.Saver(max_to_keep=1)
 init = tf.global_variables_initializer().run()
-
-
 def train(n_epochs, initial_run=True):
     if initial_run:
         print("Initial run")
@@ -265,7 +253,6 @@ def train(n_epochs, initial_run=True):
     save_path = saver.save(sess, model_to_use)
     print("Model saved in file: %s" % save_path)
     print(f"Training finished")
-
 
 if __name__ == "__main__":
     sc.settings.figdir = "../results"
