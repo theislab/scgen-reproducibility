@@ -4,7 +4,6 @@ import scanpy.api as sc
 from random import  shuffle
 import wget
 import os
-import sklearn as sk
 
 
 train_path = "../data/MouseAtlas.subset.h5ad"
@@ -147,7 +146,7 @@ def train(n_epochs, full_training=True, initial_run=True):
     print(f"total number of trained epochs is {current_step}")
 
 def restore():
-    saver.restore(sess, "../models/mouse_atlas")
+    saver.restore(sess, model_to_use)
 def vector_batch_removal(inp, batch_key1, batch_key2):
     # projecting data to latent space
     latent_all = give_me_latent(inp.X)
@@ -220,31 +219,32 @@ def vector_batch_removal(inp, batch_key1, batch_key2):
 
 
 if __name__ == "__main__":
-    sc.pp.pca(data, svd_solver="arpack")
-    sc.pp.neighbors(data, n_neighbors=25)
-    sc.tl.umap(data)
-    import matplotlib
-    sc.pl.umap(data, legend_loc=False,  palette=matplotlib.rcParams["axes.prop_cycle"] , color=['Dataset'], save="orig_mouse_datasets.png", frameon=False, show=False)
-    sc.pl.umap(data, legend_loc=False, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Cell types'], save="orig_mouse_Cell types.png", frameon=False, show=False)
-    sc.pl.umap(data, legend_loc=False, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Organ groups'], save="orig_mouse_Organ groups.png", frameon=False, show=False)
-    X_pca = data.obsm["X_pca"]
-    labels = data.obs["Dataset"].tolist()
-    print(f"average silhouette_score for original mouse :{sk.metrics.silhouette_score(X_pca,labels,sample_size=57300, random_state=2)}")
+    # sc.pp.pca(data, svd_solver="arpack")
+    # sc.pp.neighbors(data, n_neighbors=25)
+    # sc.tl.umap(data)
+    # import matplotlib
+    # sc.pl.umap(data, legend_loc=False,  palette=matplotlib.rcParams["axes.prop_cycle"] , color=['Dataset'], save="orig_mouse_datasets.png", frameon=False, show=False)
+    # sc.pl.umap(data, legend_loc=False, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Cell types'], save="orig_mouse_Cell types.png", frameon=False, show=False)
+    # sc.pl.umap(data, legend_loc=False, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Organ groups'], save="orig_mouse_Organ groups.png", frameon=False, show=False)
+    # X_pca = data.obsm["X_pca"]
+    # labels = data.obs["Dataset"].tolist()
+    # print(f"average silhouette_score for original mouse :{sk.metrics.silhouette_score(X_pca,labels,sample_size=57300, random_state=2)}")
     train(150)
     # restore()
     corrected_mouse_atlas, latent_batch = vector_batch_removal(data, "Dataset", "Organ groups")
-    sc.pp.pca(corrected_mouse_atlas, svd_solver="arpack")
-    sc.pp.neighbors(corrected_mouse_atlas, n_neighbors=25)
-    sc.tl.umap(corrected_mouse_atlas)
-    sc.pl.umap(corrected_mouse_atlas, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Dataset'], save="corrected_mouse_datasets_dsm.png",
-               frameon=False, show=False)
-    sc.pl.umap(corrected_mouse_atlas, palette=matplotlib.rcParams["axes.prop_cycle"], color=['cell_type'], save="corrected_mouse_Cell types_dsm.png",
-               frameon=False, show=False)
-    sc.pl.umap(corrected_mouse_atlas, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Organ groups'], save="corrected_mouse_Organ groups_dsm.png",
-               frameon=False, show=False)
-    X_pca = corrected_mouse_atlas.obsm["X_pca"]
-    labels2 = corrected_mouse_atlas.obs["Dataset"].tolist()
-    print(f"average silhouette_score for scGen :{sk.metrics.silhouette_score(X_pca,labels2,sample_size=57300, random_state=2)}")
+    corrected_mouse_atlas.write("../data/reconstructed/scGen/mouse_atlas.h5ad")
+    # sc.pp.pca(corrected_mouse_atlas, svd_solver="arpack")
+    # sc.pp.neighbors(corrected_mouse_atlas, n_neighbors=25)
+    # sc.tl.umap(corrected_mouse_atlas)
+    # sc.pl.umap(corrected_mouse_atlas, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Dataset'], save="corrected_mouse_datasets_dsm.png",
+    #            frameon=False, show=False)
+    # sc.pl.umap(corrected_mouse_atlas, palette=matplotlib.rcParams["axes.prop_cycle"], color=['cell_type'], save="corrected_mouse_Cell types_dsm.png",
+    #            frameon=False, show=False)
+    # sc.pl.umap(corrected_mouse_atlas, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Organ groups'], save="corrected_mouse_Organ groups_dsm.png",
+    #            frameon=False, show=False)
+    # X_pca = corrected_mouse_atlas.obsm["X_pca"]
+    # labels2 = corrected_mouse_atlas.obs["Dataset"].tolist()
+    # print(f"average silhouette_score for scGen :{sk.metrics.silhouette_score(X_pca,labels2,sample_size=57300, random_state=2)}")
 
 
 
