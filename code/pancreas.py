@@ -19,7 +19,7 @@ else:
 
 path_to_save = "../results/Figures/Figure 6/"
 sc.settings.figdir = path_to_save
-model_to_use = "../models/pancreas/"
+model_to_use = "../models/pancreas/scgen"
 batch_size = 32
 train_real = data
 input_matrix = data.X

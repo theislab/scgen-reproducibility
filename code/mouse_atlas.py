@@ -20,7 +20,7 @@ else:
 
 
 sc.settings.figdir = "../results"
-model_to_use = "../models/mouse_atlas"
+model_to_use = "../models/mouse_atlas/scgen"
 batch_size = 32
 train_real = data
 input_matrix = data.X
@@ -106,9 +106,9 @@ mean, variance = Q(X)
 z_mean = sample_z(mean,variance,size)
 X_hat = P(z_mean)
 # =============================== loss ====================================
-kl_loss = 0.5 * tf.reduce_sum(tf.exp(variance) + variance**2 - 1. - variance, 1)
+kl_loss = 0.5 * tf.reduce_sum(tf.exp(variance) + mean**2 - 1. - variance, 1)
 recon_loss = 0.5*tf.reduce_sum(tf.square((X-X_hat)), 1)
-vae_loss = tf.reduce_mean(recon_loss + kl_loss)
+vae_loss = tf.reduce_mean(recon_loss + 0.00005 * kl_loss)
 recon_loss_summary = tf.summary.scalar('REC', tf.reduce_mean(recon_loss))
 vae_loss_summary = tf.summary.scalar('VAE', vae_loss)
 t_vars = tf.trainable_variables()
@@ -146,7 +146,8 @@ def train(n_epochs, full_training=True, initial_run=True):
     print("Model saved in file: %s" % save_path)
     print(f"total number of trained epochs is {current_step}")
 
-
+def restore():
+    saver.restore(sess, "../models/mouse_atlas")
 def vector_batch_removal(inp, batch_key1, batch_key2):
     # projecting data to latent space
     latent_all = give_me_latent(inp.X)
@@ -222,22 +223,24 @@ if __name__ == "__main__":
     sc.pp.pca(data, svd_solver="arpack")
     sc.pp.neighbors(data, n_neighbors=25)
     sc.tl.umap(data)
-    sc.pl.umap(data, color=['Dataset'], save="orig_mouse_datasets.pdf", frameon=False, show=False)
-    sc.pl.umap(data, color=['Cell types'], save="orig_mouse_Cell types.pdf", frameon=False, show=False)
-    sc.pl.umap(data, color=['Organ groups'], save="orig_mouse_Organ groups.pdf", frameon=False, show=False)
+    import matplotlib
+    sc.pl.umap(data, legend_loc=False,  palette=matplotlib.rcParams["axes.prop_cycle"] , color=['Dataset'], save="orig_mouse_datasets.png", frameon=False, show=False)
+    sc.pl.umap(data, legend_loc=False, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Cell types'], save="orig_mouse_Cell types.png", frameon=False, show=False)
+    sc.pl.umap(data, legend_loc=False, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Organ groups'], save="orig_mouse_Organ groups.png", frameon=False, show=False)
     X_pca = data.obsm["X_pca"]
     labels = data.obs["Dataset"].tolist()
     print(f"average silhouette_score for original mouse :{sk.metrics.silhouette_score(X_pca,labels,sample_size=57300, random_state=2)}")
     train(150)
+    # restore()
     corrected_mouse_atlas, latent_batch = vector_batch_removal(data, "Dataset", "Organ groups")
     sc.pp.pca(corrected_mouse_atlas, svd_solver="arpack")
     sc.pp.neighbors(corrected_mouse_atlas, n_neighbors=25)
     sc.tl.umap(corrected_mouse_atlas)
-    sc.pl.umap(corrected_mouse_atlas, color=['Dataset'], save="corrected_mouse_datasets_dsm.pdf",
+    sc.pl.umap(corrected_mouse_atlas, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Dataset'], save="corrected_mouse_datasets_dsm.png",
                frameon=False, show=False)
-    sc.pl.umap(corrected_mouse_atlas, color=['cell_type'], save="corrected_mouse_Cell types_dsm.pdf",
+    sc.pl.umap(corrected_mouse_atlas, palette=matplotlib.rcParams["axes.prop_cycle"], color=['cell_type'], save="corrected_mouse_Cell types_dsm.png",
                frameon=False, show=False)
-    sc.pl.umap(corrected_mouse_atlas, color=['Organ groups'], save="corrected_mouse_Organ groups_dsm.pdf",
+    sc.pl.umap(corrected_mouse_atlas, palette=matplotlib.rcParams["axes.prop_cycle"], color=['Organ groups'], save="corrected_mouse_Organ groups_dsm.png",
                frameon=False, show=False)
     X_pca = corrected_mouse_atlas.obsm["X_pca"]
     labels2 = corrected_mouse_atlas.obs["Dataset"].tolist()
