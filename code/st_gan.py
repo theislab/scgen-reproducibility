@@ -1,17 +1,16 @@
-import os
 from random import shuffle
 
 import numpy as np
 import scanpy.api as sc
 import tensorflow as tf
-import wget
 from data_reader import data_reader
 
 # =============================== downloading training and validation files ====================================
-train_path = "../figCodes/data/train.h5ad"
-valid_path = "../figCodes/data/validation.h5ad"
+train_path = "../data/train_pbmc.h5ad"
+valid_path = "../data/valid_pbmc.h5ad"
 
 import os
+
 print(os.getcwd())
 data = sc.read(train_path)
 
@@ -35,8 +34,6 @@ ind_list = [i for i in range(train_real_ctrl.shape[0])]
 shuffle(ind_list)
 train_real_ctrl = train_real_ctrl[ind_list, :]
 eq = min(len(train_real_ctrl), len(train_real_stim))
-print(eq)
-exit()
 stim_ind = np.random.choice(range(len(train_real_stim)), size=eq, replace=False)
 ctrl_ind = np.random.choice(range(len(train_real_ctrl)), size=eq, replace=False)
 ##selecting equal size for both stimulated and control cells
@@ -257,32 +254,46 @@ def train(n_epochs, initial_run=True):
     print("Model saved in file: %s" % save_path)
     print(f"Training finished")
 
+
 def restore():
     saver.restore(sess, model_to_use)
 
+
 if __name__ == "__main__":
-    sc.settings.figdir = "../results"
+    import sys
+    path_to_save = "../results/Figures/Supplemental Figure 4/"
+    sc.settings.figdir = path_to_save
     sc.settings.writedir = "../data"
-    # train(1000, initial_run=True)
-    restore()
+    print(sys.argv[1])
+    if sys.argv[1] == "train":
+        train(1000, initial_run=True)
+    else:
+        restore()
+    print("model has been trained/restored!")
     adata_list = dr.extractor(data, "CD4T")
     ctrl_CD4T = adata_list[1]
-    predicted_cells = predict(ctrl_CD4T.X.A)
-    all_Data = sc.AnnData(np.concatenate([adata_list[1].X.A, adata_list[2].X.A, predicted_cells]))
-    all_Data.obs["condition"] = ["ctrl"] * len(adata_list[1].X.A) + ["real_stim"] * len(adata_list[2].X.A) + \
-                                ["pred_stim"] * len(predicted_cells)
-    all_Data.var_names = adata_list[3].var_names
-    all_Data.write("../data/reconstructed/CGAN/cgan_cd4t.h5ad")
-    dr.reg_mean_plot(all_Data, "../results/", "style_trasnfer")
-    dr.reg_var_plot(all_Data, "../results/", "style_trasnfer ")
-    sc.pl.violin(all_Data, groupby="condition", keys="ISG15", save="_ISG15_style_trasnfer.pdf", show=False)
-    sc.pp.neighbors(all_Data)
-    sc.tl.umap(all_Data)
-    sc.pl.umap(all_Data, color=["condition"], save="style_trasnfer.pdf", show=False)
-    low_dim = low_embed_stim(train_real.X)
-    dt = sc.AnnData(low_dim)
-    sc.pp.neighbors(dt)
-    sc.tl.umap(dt)
-    dt.obs["cell_type"] = train_real.obs["cell_type"]
-    dt.obs["condition"] = train_real.obs["condition"]
-    sc.pl.umap(dt, color=["cell_type", "condition"], show=False, save="_style_transfer_latent.pdf")
+    if sys.argv[1] == "train":
+        predicted_cells = predict(ctrl_CD4T.X.A)
+        all_Data = sc.AnnData(np.concatenate([adata_list[1].X.A, adata_list[2].X.A, predicted_cells]))
+        all_Data.obs["condition"] = ["ctrl"] * len(adata_list[1].X.A) + ["real_stim"] * len(adata_list[2].X.A) + \
+                                    ["pred_stim"] * len(predicted_cells)
+        all_Data.var_names = adata_list[3].var_names
+        all_Data.write("../data/reconstructed/CGAN/cgan_cd4t.h5ad")
+    if sys.argv[1] == "latent":
+        low_dim = low_embed_stim(train_real.X)
+        dt = sc.AnnData(low_dim)
+        sc.pp.neighbors(dt)
+        sc.tl.umap(dt)
+        dt.obs["cell_type"] = train_real.obs["cell_type"]
+        dt.obs["condition"] = train_real.obs["condition"]
+        sc.pl.umap(dt, color=["cell_type"], show=False, frameon=False
+                   , save="_latent_cell_type.png")
+
+        sc.pl.umap(dt, color=["condition"], show=False, frameon=False
+                   , save="_latent_condition.png", palette=["#96a1a3", "#A4E804"])
+
+        os.rename(src=os.path.join(path_to_save, "umap_latent_cell_type.png"),
+                  dst=os.path.join(path_to_save, f"SupplFig4b_style_transfer_celltype.png"))
+
+        os.rename(src=os.path.join(path_to_save, "umap_latent_condition.png"),
+                  dst=os.path.join(path_to_save, f"SupplFig4b_style_transfer_condition.png"))
