@@ -14,7 +14,7 @@ figure       | notebook path
 | [*Figure 3*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/Fig3.ipynb)| Jupyter Notebooks/Fig3.ipynb| 
 | [*Figure 4*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/Fig4.ipynb)| Jupyter Notebooks/Fig4.ipynb| 
 | [*Figure 5*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/Fig5.ipynb)| Jupyter Notebooks/Fig5.ipynb| 
-| [*Figure 6*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/Fig6.ipynb)| Jupyter Notebooks/Fig2.ipynb| 
+| [*Figure 6*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/Fig6.ipynb)| Jupyter Notebooks/Fig6.ipynb| 
 | [*Supplemental Figure 1*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/SupplFig1.ipynb)| Jupyter Notebooks/SupplFig1.ipynb| 
 | [*Supplemental Figure 3*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/SupplFig3.ipynb)| Jupyter Notebooks/SupplFig3.ipynb| 
 | [*Supplemental Figure 4*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/SupplFig4.ipynb)| Jupyter Notebooks/SupplFig4.ipynb| 
