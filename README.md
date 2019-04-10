@@ -31,4 +31,12 @@ To run the notebooks and scripts you need following packages :
 tensorflow, scanpy, numpy, matplotlib, scipy, wget.
 
 
+## Getting Started
 
+```bash
+cd code/
+python DataDownloader.py
+python ModelTrainer.py
+```
+
+Then you can run each notebook and reproduce the results.
