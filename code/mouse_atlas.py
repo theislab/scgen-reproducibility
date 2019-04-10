@@ -229,7 +229,7 @@ if __name__ == "__main__":
     # X_pca = data.obsm["X_pca"]
     # labels = data.obs["Dataset"].tolist()
     # print(f"average silhouette_score for original mouse :{sk.metrics.silhouette_score(X_pca,labels,sample_size=57300, random_state=2)}")
-    train(150)
+    train(300)
     # restore()
     corrected_mouse_atlas, latent_batch = vector_batch_removal(data, "Dataset", "Organ groups")
     corrected_mouse_atlas.write("../data/reconstructed/scGen/mouse_atlas.h5ad")
