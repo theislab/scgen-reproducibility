@@ -4,7 +4,7 @@
 
 
 
-This repository includes python scripts and notebooks in the [code](https://github.com/theislab/scGen/tree/master/code) folder to reproduce figures from the paper [(bioRxiv, 2018)](https://www.biorxiv.org/content/10.1101/478503v2) according to the table bellow.
+This repository includes python scripts in [code](https://github.com/theislab/scGen/tree/master/code) and notebooks in the [Jupyter Notebooks](https://github.com/theislab/scGen/tree/master/Jupyter%20Notebooks) folder to reproduce figures from the paper [(bioRxiv, 2018)](https://www.biorxiv.org/content/10.1101/478503v2) according to the table bellow.
 
 
 
