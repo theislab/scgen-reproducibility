@@ -8,7 +8,7 @@ This repository includes python scripts and notebooks in the [code](https://gith
 
 
 
-figure       | notebook/script     
+figure       | notebook path     
 ---------------| ---------------
 | [*Figure 2*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/Fig2.ipynb)| Jupyter Notebooks/Fig2.ipynb| 
 | [*Figure 3*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/Fig3.ipynb)| Jupyter Notebooks/Fig3.ipynb| 
