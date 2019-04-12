@@ -108,7 +108,9 @@ def training_data_provider(train_s, train_t):
     train_s_diet = []
     train_s_groups = []
     for i in train_s:
-        train_s_X.append(i.X.A)
+        if sparse.issparse(i.X):
+            i.X = i.X.A
+        train_s_X.append(i.X)
         train_s_diet.append(i.obs["condition"].tolist())
         train_s_groups.append(i.obs["cell_type"].tolist())
     train_s_X = np.concatenate(train_s_X)
@@ -124,7 +126,9 @@ def training_data_provider(train_s, train_t):
     train_t_diet = []
     train_t_groups = []
     for i in train_t:
-        train_t_X.append(i.X.A)
+        if sparse.issparse(i.X):
+            i.X = i.X.A
+        train_t_X.append(i.X)
         train_t_diet.append(i.obs["condition"].tolist())
         train_t_groups.append(i.obs["cell_type"].tolist())
     temp = []

@@ -53,9 +53,9 @@ def train(data_name="pbmc", cell_type="CD4T", p_type="unbiased"):
                                 ["pred_stim"] * len(predicted_cells)
     all_Data.var_names = ctrl_cell.var_names
     if p_type == "unbiased":
-        sc.write(f"../data/reconstructed/Vec. Arithm./VecArithm_CD4T.h5ad", all_Data)
+        sc.write(f"../data/reconstructed/VecArithm/VecArithm_CD4T.h5ad", all_Data)
     else:
-        sc.write(f"../data/reconstructed/Vec. Arithm./VecArithm_CD4T_biased.h5ad", all_Data)
+        sc.write(f"../data/reconstructed/VecArithm/VecArithm_CD4T_biased.h5ad", all_Data)
 
 
 def predict(cd_x, hfd_x, cd_y, p_type="unbiased"):
