@@ -2,7 +2,7 @@ library(dplyr)
 library("ComplexHeatmap")
 #################
 load("./BlueYellowColormaps_V1.RData")
-pdf(file="../results/Figures/Supplemental Figure 8/SupplFig8c_hpoly_TA_heatmap.pdf")
+pdf(file="../results/Figures/Supplemental Figure 8/SupplFig8c_salmonella_TA_heatmap.pdf")
 heat = read.csv("./TA.txt")
 dim(heat)
 df = heat[,2:11]
