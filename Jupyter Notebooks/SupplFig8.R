@@ -30,7 +30,7 @@ d = t(apply(d, 1, scale))
 font_size = .6
 ht = Heatmap(d,row_names_side = "left",
              heatmap_legend_param = list(title = "scaled expression")
-             , cluster_rows = FALSE,cluster_columns = FALSE,column_title = "intermediate CD4 T cells",col = yellow2blue)
+             , cluster_rows = FALSE,cluster_columns = FALSE,column_title = "intermediate CD4-T cells",col = yellow2blue)
 ht_list =  ht
 draw(ht_list)
 dev.off()
