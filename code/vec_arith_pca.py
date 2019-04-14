@@ -34,19 +34,20 @@ def reconstruct():
     ctrl_key = "control"
     stim_key = "stimulated"
     all_data = anndata.AnnData()
-    pca = PCA(n_components=100)
-
     print(data.obs["cell_type"].unique().tolist())
     for idx, cell_type in enumerate(data.obs["cell_type"].unique().tolist()):
+        pca = PCA(n_components=100)
+        train = data[~((data.obs["condition"] == stim_key) & (data.obs["cell_type"] == cell_type))]
+        pca.fit(train.X.A)
         print(cell_type, end="\t")
         train_real_stimulated = data[data.obs["condition"] == stim_key, :]
         train_real_stimulated = train_real_stimulated[train_real_stimulated.obs["cell_type"] != cell_type]
         train_real_stimulated = scgen.util.balancer(train_real_stimulated)
-        train_real_stimulated_PCA = pca.fit_transform(train_real_stimulated.X)
+        train_real_stimulated_PCA = pca.transform(train_real_stimulated.X)
 
         train_real_cd = data[data.obs["condition"] == ctrl_key, :]
         train_real_cd = scgen.util.balancer(train_real_cd)
-        train_real_cd_PCA = pca.fit_transform(train_real_cd.X)
+        train_real_cd_PCA = pca.transform(train_real_cd.X)
 
         cell_type_adata = data[data.obs["cell_type"] == cell_type]
         cell_type_ctrl = cell_type_adata[cell_type_adata.obs["condition"] == ctrl_key]
@@ -94,6 +95,8 @@ def train(data_name="pbmc", cell_type="CD4T", p_type="unbiased"):
     train = data[~((data.obs["condition"] == stim_key) & (data.obs[cell_type_key] == cell_type))]
     pca = PCA(n_components=100)
 
+    pca.fit(train.X.A)
+
     train_real_cd = train[train.obs["condition"] == "control", :]
     if p_type == "unbiased":
         train_real_cd = scgen.util.balancer(train_real_cd)
@@ -106,8 +109,8 @@ def train(data_name="pbmc", cell_type="CD4T", p_type="unbiased"):
         train_real_cd.X = train_real_cd.X.A
         train_real_stimulated.X = train_real_stimulated.X.A
 
-    train_real_stimulated_PCA = pca.fit_transform(train_real_stimulated.X)
-    train_real_cd_PCA = pca.fit_transform(train_real_cd.X)
+    train_real_stimulated_PCA = pca.transform(train_real_stimulated.X)
+    train_real_cd_PCA = pca.transform(train_real_cd.X)
 
     adata_list = scgen.util.extractor(data, cell_type, {"ctrl": ctrl_key, "stim": stim_key})
     if sparse.issparse(adata_list[1].X):
