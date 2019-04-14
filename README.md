@@ -25,6 +25,7 @@ figure       | notebook path
 | [*Supplemental Figure 9*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/SupplFig9.ipynb)| Jupyter Notebooks/SupplFig9.ipynb| 
 | [*Supplemental Figure 10*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/SupplFig10.ipynb)| Jupyter Notebooks/SupplFig10.ipynb| 
 | [*Supplemental Figure 11*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/SupplFig11.ipynb)| Jupyter Notebooks/SupplFig11.ipynb| 
+| [*Supplemental Figure 12*](https://nbviewer.jupyter.org/github/M0hammadL/scGen_reproducibility/blob/master/Jupyter%20Notebooks/SupplFig12.ipynb)| Jupyter Notebooks/SupplFig12.ipynb| 
 
 To run the notebooks and scripts you need following packages :
 
