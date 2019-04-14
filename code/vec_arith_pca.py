@@ -141,6 +141,6 @@ if __name__ == "__main__":
     #            , save="Vec_Arith_PCA_biased.png", show=False,
     #            legend_fontsize=18, title="")
     # sc.pl.violin(all_Data, groupby='condition', keys="ISG15", save="Vec_Arith_PCA.pdf", show=False)
-    # train("pbmc", "CD4T", "unbiased")
-    # train("pbmc", "CD4T", "biased")
+    train("pbmc", "CD4T", "unbiased")
+    train("pbmc", "CD4T", "biased")
     reconstruct()
