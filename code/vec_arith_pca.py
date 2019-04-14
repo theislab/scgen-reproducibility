@@ -107,7 +107,7 @@ def train(data_name="pbmc", cell_type="CD4T", p_type="unbiased"):
         train_real_stimulated.X = train_real_stimulated.X.A
 
     train_real_stimulated_PCA = pca.fit_transform(train_real_stimulated.X)
-    train_real_cd_PCA = pca.transform(train_real_cd.X)
+    train_real_cd_PCA = pca.fit_transform(train_real_cd.X)
 
     adata_list = scgen.util.extractor(data, cell_type, {"ctrl": ctrl_key, "stim": stim_key})
     if sparse.issparse(adata_list[1].X):
