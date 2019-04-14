@@ -35,25 +35,18 @@ def reconstruct():
     stim_key = "stimulated"
     all_data = anndata.AnnData()
     pca = PCA(n_components=100)
-    if sparse.issparse(data.X):
-        pca_data = sc.AnnData(pca.fit_transform(data.X.A))
-    else:
-        pca_data = sc.AnnData(pca.fit_transform(data.X))
-    print("Data has been fitted!")
-    # data.obs["cell_type"] = data.obs["cell_label"]
-    pca_data.obs["cell_type"] = data.obs["cell_type"]
-    pca_data.obs["condition"] = data.obs["condition"]
+
     print(data.obs["cell_type"].unique().tolist())
     for idx, cell_type in enumerate(data.obs["cell_type"].unique().tolist()):
         print(cell_type, end="\t")
         train_real_stimulated = data[data.obs["condition"] == stim_key, :]
         train_real_stimulated = train_real_stimulated[train_real_stimulated.obs["cell_type"] != cell_type]
         train_real_stimulated = scgen.util.balancer(train_real_stimulated)
-        train_real_stimulated_PCA = pca.transform(train_real_stimulated.X)
+        train_real_stimulated_PCA = pca.fit_transform(train_real_stimulated.X)
 
         train_real_cd = data[data.obs["condition"] == ctrl_key, :]
         train_real_cd = scgen.util.balancer(train_real_cd)
-        train_real_cd_PCA = pca.transform(train_real_cd.X)
+        train_real_cd_PCA = pca.fit_transform(train_real_cd.X)
 
         cell_type_adata = data[data.obs["cell_type"] == cell_type]
         cell_type_ctrl = cell_type_adata[cell_type_adata.obs["condition"] == ctrl_key]
@@ -145,6 +138,6 @@ if __name__ == "__main__":
     #            , save="Vec_Arith_PCA_biased.png", show=False,
     #            legend_fontsize=18, title="")
     # sc.pl.violin(all_Data, groupby='condition', keys="ISG15", save="Vec_Arith_PCA.pdf", show=False)
-    train("pbmc", "CD4T", "unbiased")
-    train("pbmc", "CD4T", "biased")
+    # train("pbmc", "CD4T", "unbiased")
+    # train("pbmc", "CD4T", "biased")
     reconstruct()
