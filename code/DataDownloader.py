@@ -18,23 +18,37 @@ url_dict = {
     "train_study": "https://drive.google.com/uc?export=download&id=1dUZ_4f5EuU9YYu7APfrxl6mhbpSqairb",
     "valid_study": "https://drive.google.com/uc?export=download&id=1HAzqBAQnd8zUKD3FqoAyUEitgw7-BDyg",
 
-    "train_zheng": "",
+    "train_zheng": "https://drive.google.com/uc?export=download&id=17E0Ew9vNqCigJn_1xDUgO4clBslinAMc",
+
+    "pancreas": "https://drive.google.com/uc?export=download&id=1BVhA5N-vzUvJL_yvH7_LmzAHTsVDIRCL",
+    "bbknn": "https://drive.google.com/uc?export=download&id=1_ODyjqCKPIYTqWwNJdVdq4JOaxOkupZG",
+    "cca": "https://drive.google.com/uc?export=download&id=1th8tl9QgnapYzw_i--C2VpLQKFhLnMZa",
+    "mnn": "https://drive.google.com/uc?export=download&id=1tEjTNVgH_TxVCHIXJhdegbd9IuB7JsUr",
+
+    "MouseAtlas.subset": "https://drive.google.com/uc?export=download&id=1IiLFYEs4a8OS2nqT4FSk5BsB3UO3UHPZ"
+
 }
 
 
-def download_data(data_name):
+def download_data(data_name, key=None):
     data_path = "../data/"
-    train_path = os.path.join(data_path, f"train_{data_name}.h5ad")
-    valid_path = os.path.join(data_path, f"valid_{data_name}.h5ad")
+    if key is None:
+        train_path = os.path.join(data_path, f"train_{data_name}.h5ad")
+        valid_path = os.path.join(data_path, f"valid_{data_name}.h5ad")
 
-    train_url = url_dict[f"train_{data_name}"]
-    valid_url = url_dict[f"valid_{data_name}"]
+        train_url = url_dict[f"train_{data_name}"]
+        valid_url = url_dict[f"valid_{data_name}"]
 
-    if not os.path.exists(train_path):
-        wget.download(train_url, train_path)
-    if not os.path.exists(valid_path):
-        wget.download(valid_url, valid_path)
+        if not os.path.exists(train_path):
+            wget.download(train_url, train_path)
+        if not os.path.exists(valid_path):
+            wget.download(valid_url, valid_path)
+    else:
+        data_path = os.path.join(data_path, f"{key}.h5ad")
+        data_url = url_dict[key]
 
+        if not os.path.exists(data_path):
+            wget.download(data_url, data_path)
     print(f"{data_name} data has been downloaded and saved in {data_path}")
 
 
@@ -42,6 +56,9 @@ def main():
     data_names = ["pbmc", "hpoly", "salmonella", "species", "study"]
     for data_name in data_names:
         download_data(data_name)
+    keys = ["train_zheng", "pancreas", "bbknn", "cca", "mnn", "MouseAtlas.subset"]
+    for key in keys:
+        download_data(None, "key")
 
 
 if __name__ == '__main__':
