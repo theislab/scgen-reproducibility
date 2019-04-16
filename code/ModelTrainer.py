@@ -8,10 +8,10 @@ def main():
     else:
         model_to_train = sys.argv[1]
     if model_to_train == "all":
-        command = "python ./vec_arth_pca.py"
+        command = "python ./vec_arith_pca.py"
         subprocess.call([command], shell=True)
 
-        command = "python ./vec_arth.py"
+        command = "python ./vec_arith.py"
         subprocess.call([command], shell=True)
 
         command = "python ./st_gan.py train"
@@ -24,10 +24,10 @@ def main():
         subprocess.call([command], shell=True)
 
     elif model_to_train == "PCA":
-        command = "python ./vec_arth_pca.py"
+        command = "python ./vec_arith_pca.py"
         subprocess.call([command], shell=True)
     elif model_to_train == "VecArithm":
-        command = "python ./vec_arth.py"
+        command = "python ./vec_arith.py"
         subprocess.call([command], shell=True)
     elif model_to_train == "STGAN":
         command = "python ./st_gan.py train"
