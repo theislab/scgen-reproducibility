@@ -41,6 +41,7 @@ train_real_ctrl = train_real_ctrl[ctrl_ind, :]
 train_real_stim = train_real_stim[stim_ind, :]
 # =============================== parameters ====================================
 model_to_use = "../models/STGAN/stgan"
+os.makedirs(model_to_use, exist_ok=True)
 X_dim = gex_size
 z_dim = 100
 h_dim = 200
