@@ -3,22 +3,22 @@ import os
 import wget
 
 url_dict = {
-    "train_pbmc": "https://drive.google.com/uc?export=download&id=1vXiEzN14M8tzSngPc8ufowOEv4sokVs9",
-    "valid_pbmc": "https://drive.google.com/uc?export=download&id=1cd0NgirLuL81-igegduLGxEpHKSs2-C5",
+    "train_pbmc": "https://www.dropbox.com/s/wk5zewf2g1oat69/train_pbmc.h5ad?dl=1",
+    "valid_pbmc": "https://www.dropbox.com/s/nqi971n0tk4nbfj/valid_pbmc.h5ad?dl=1",
 
-    "train_hpoly": "https://drive.google.com/uc?export=download&id=1IZkQcIj1jz04cyLOW-IHtEc4jBNeBxVQ",
-    "valid_hpoly": "https://drive.google.com/uc?export=download&id=1ZwN7BpUWfzV8-hYnjAq2FeGMec5phKxZ",
+    "train_hpoly": "https://www.dropbox.com/s/7ngt0hv21hl2exn/train_hpoly.h5ad?dl=1",
+    "valid_hpoly": "https://www.dropbox.com/s/bp6geyvoz77hpnz/valid_hpoly.h5ad?dl=1",
 
-    "train_salmonella": "https://drive.google.com/uc?export=download&id=11lFjCiYwFIwm21QCCCeabTupiy6LqQjJ",
-    "valid_salmonella": "https://drive.google.com/uc?export=download&id=1ytgIt2talgHPbX_CNu5O7bkMP8A1SGdJ",
+    "train_salmonella": "https://www.dropbox.com/s/9ozdwdi37wrz9r1/train_salmonella.h5ad?dl=1",
+    "valid_salmonella": "https://www.dropbox.com/s/z5jnq4nthierdgq/valid_salmonella.h5ad?dl=1",
 
     "train_species": "https://www.dropbox.com/s/eprgwhd98c9quiq/train_species.h5ad?dl=1",
-    "valid_species": "https://drive.google.com/uc?export=download&id=1CNcESxSIsSZcqNIXjZpiiWmkOIMlr9h7",
+    "valid_species": "https://www.dropbox.com/s/bwq18z0mzy6h5d7/valid_species.h5ad?dl=1",
 
-    "train_study": "https://drive.google.com/uc?export=download&id=1dUZ_4f5EuU9YYu7APfrxl6mhbpSqairb",
-    "valid_study": "https://drive.google.com/uc?export=download&id=1HAzqBAQnd8zUKD3FqoAyUEitgw7-BDyg",
+    "train_study": "https://www.dropbox.com/s/75cdaxyn9ldpeqz/train_study.h5ad?dl=1",
+    "valid_study": "https://www.dropbox.com/s/klyy7ybeiwo0u8a/valid_study.h5ad?dl=1",
 
-    "train_zheng": "https://drive.google.com/uc?export=download&id=17E0Ew9vNqCigJn_1xDUgO4clBslinAMc",
+    "train_zheng": "https://www.dropbox.com/s/deajaxpmrxnjatj/train_zheng.h5ad?dl=1",
 
     "pancreas": "https://www.dropbox.com/s/qj1jlm9w10wmt0u/pancreas.h5ad?dl=1",
     "bbknn": "https://www.dropbox.com/s/3kprctbxyxnlrgt/bbknn.h5ad?dl=1",
