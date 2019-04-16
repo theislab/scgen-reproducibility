@@ -335,7 +335,7 @@ class CVAE:
         self.saver.restore(self.sess, self.model_to_use)
 
     def train(self, train_data, use_validation=False, valid_data=None, n_epochs=25, batch_size=32, early_stop_limit=20,
-              threshold=0.0025, initial_run=True, shuffle=True):
+              threshold=0.00025, initial_run=True, shuffle=True):
         """
             Trains the network `n_epochs` times with given `train_data`
             and validates the model using validation_data if it was given

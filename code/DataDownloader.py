@@ -12,7 +12,7 @@ url_dict = {
     "train_salmonella": "https://drive.google.com/uc?export=download&id=11lFjCiYwFIwm21QCCCeabTupiy6LqQjJ",
     "valid_salmonella": "https://drive.google.com/uc?export=download&id=1ytgIt2talgHPbX_CNu5O7bkMP8A1SGdJ",
 
-    "train_species": "https://www.dropbox.com/s/vb5xm2y9eqwunmh/train_species.h5ad?dl=1",
+    "train_species": "https://www.dropbox.com/s/eprgwhd98c9quiq/train_species.h5ad?dl=1",
     "valid_species": "https://drive.google.com/uc?export=download&id=1CNcESxSIsSZcqNIXjZpiiWmkOIMlr9h7",
 
     "train_study": "https://drive.google.com/uc?export=download&id=1dUZ_4f5EuU9YYu7APfrxl6mhbpSqairb",
@@ -21,10 +21,10 @@ url_dict = {
     "train_zheng": "https://drive.google.com/uc?export=download&id=17E0Ew9vNqCigJn_1xDUgO4clBslinAMc",
 
     "pancreas": "https://www.dropbox.com/s/qj1jlm9w10wmt0u/pancreas.h5ad?dl=1",
-    "bbknn": "https://www.dropbox.com/s/mkxzca2447x3hdu/bbknn.h5ad?dl=1",
+    "bbknn": "https://www.dropbox.com/s/3kprctbxyxnlrgt/bbknn.h5ad?dl=1",
     "cca": "https://www.dropbox.com/s/fjn3hc3z994kerg/cca.h5ad?dl=1",
     "mnn": "https://www.dropbox.com/s/n4vl10h7zw7m6tl/mnn.h5ad?dl=1",
-    "scanorama": "https://www.dropbox.com/s/2ek1rfus06737ik/scanorama.h5ad?dl=1",
+    "scanorama": "https://www.dropbox.com/s/j8fti1txfa57dvm/scanorama.h5ad?dl=1",
 
     "MouseAtlas.subset": "https://www.dropbox.com/s/zkss8ds1pi0384p/MouseAtlas.subset.h5ad?dl=1"
 
