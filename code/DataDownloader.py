@@ -22,7 +22,7 @@ url_dict = {
 
     "pancreas": "https://www.dropbox.com/s/qj1jlm9w10wmt0u/pancreas.h5ad?dl=1",
     "bbknn": "https://www.dropbox.com/s/3kprctbxyxnlrgt/bbknn.h5ad?dl=1",
-    "cca": "https://www.dropbox.com/s/fjn3hc3z994kerg/cca.h5ad?dl=1",
+    "cca": "https://www.dropbox.com/s/mxk9mbhelt7kn22/cca.h5ad?dl=1",
     "mnn": "https://www.dropbox.com/s/n4vl10h7zw7m6tl/mnn.h5ad?dl=1",
     "scanorama": "https://www.dropbox.com/s/j8fti1txfa57dvm/scanorama.h5ad?dl=1",
 
