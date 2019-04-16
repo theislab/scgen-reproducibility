@@ -38,3 +38,7 @@ def main():
     elif model_to_train == "scGen":
         command = "python ./train_scGen.py"
         subprocess.call([command], shell=True)
+
+
+if __name__ == '__main__':
+    main()
