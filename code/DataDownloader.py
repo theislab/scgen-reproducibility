@@ -57,9 +57,9 @@ def main():
     data_names = ["pbmc", "hpoly", "salmonella", "species", "study"]
     for data_name in data_names:
         download_data(data_name)
-    keys = ["train_zheng", "pancreas", "bbknn", "cca", "mnn", "MouseAtlas.subset"]
+    keys = ["train_zheng", "pancreas", "bbknn", "cca", "mnn", "scanorama", "MouseAtlas.subset"]
     for key in keys:
-        download_data(None, "key")
+        download_data(None, key)
 
 
 if __name__ == '__main__':
