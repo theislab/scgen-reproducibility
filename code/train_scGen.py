@@ -51,6 +51,7 @@ def test_train_whole_data_one_celltype_out(data_name="pbmc",
                                  model_path=f"../models/scGen/{data_name}/{cell_type}/scgen")
 
         network.train(net_train_data, use_validation=True, valid_data=net_valid_data, n_epochs=n_epochs, batch_size=batch_size)
+        network.sess.close()
         print(f"network_{cell_type} has been trained!")
 
 
@@ -122,6 +123,7 @@ def reconstruct_whole_data(data_name="pbmc", condition_key="condition"):
             all_data = all_data.concatenate(ctrl_adata, pred_adata, real_stim_adata)
 
         print(f"Finish Reconstructing for {cell_type}")
+        network.sess.close()
     all_data.write_h5ad(f"../data/reconstructed/scGen/{data_name}.h5ad")
 
 
@@ -157,6 +159,7 @@ def test_train_whole_data_some_celltypes_out(data_name="pbmc",
 
     network.train(net_train_data, use_validation=True, valid_data=net_valid_data, n_epochs=n_epochs, batch_size=batch_size)
     print(f"network has been trained!")
+    network.sess.close()
 
 
 def train_cross_study(data_name="study",
@@ -179,6 +182,7 @@ def train_cross_study(data_name="study",
 
     network.train(net_train_data, use_validation=True, valid_data=valid, n_epochs=n_epochs, batch_size=batch_size)
     print(f"network_{data_name} has been trained!")
+    network.sess.close()
 
 
 if __name__ == '__main__':
