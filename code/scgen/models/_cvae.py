@@ -2,9 +2,8 @@ import logging
 import os
 
 import tensorflow
-from scipy import sparse
-
 from scgen.models.util import shuffle_data, label_encoder
+from scipy import sparse
 
 log = logging.getLogger(__file__)
 
@@ -102,14 +101,14 @@ class CVAE:
             xy = tensorflow.concat([self.z_mean, self.y], axis=1)
             h = tensorflow.layers.dense(inputs=xy, units=400, kernel_initializer=self.init_w, use_bias=False)
             h = tensorflow.layers.batch_normalization(h, axis=1, training=self.is_training)
-            h_mmd = tensorflow.nn.leaky_relu(h)
-            h = tensorflow.layers.dense(inputs=h_mmd, units=700, kernel_initializer=self.init_w, use_bias=False)
+            h = tensorflow.nn.leaky_relu(h)
+            h = tensorflow.layers.dense(inputs=h, units=700, kernel_initializer=self.init_w, use_bias=False)
             h = tensorflow.layers.batch_normalization(h, axis=1, training=self.is_training)
             h = tensorflow.nn.leaky_relu(h)
             h = tensorflow.layers.dropout(h, self.dr_rate, training=self.is_training)
             h = tensorflow.layers.dense(inputs=h, units=self.x_dim, kernel_initializer=self.init_w, use_bias=True)
             h = tensorflow.nn.relu(h)
-            return h, h_mmd
+            return h
 
     def _sample_z(self):
         """
@@ -142,52 +141,7 @@ class CVAE:
         """
         self.mu, self.log_var = self._encoder()
         self.z_mean = self._sample_z()
-        self.x_hat, self.mmd_hl = self._mmd_decoder()
-
-    @staticmethod
-    def compute_kernel(x, y):
-        """
-            Computes RBF kernel between x and y.
-
-            # Parameters
-                x: Tensor
-                    Tensor with shape [batch_size, z_dim]
-                y: Tensor
-                    Tensor with shape [batch_size, z_dim]
-
-            # Returns
-                returns the computed RBF kernel between x and y
-        """
-        x_size = tensorflow.shape(x)[0]
-        y_size = tensorflow.shape(y)[0]
-        dim = tensorflow.shape(x)[1]
-        tiled_x = tensorflow.tile(tensorflow.reshape(x, tensorflow.stack([x_size, 1, dim])),
-                                  tensorflow.stack([1, y_size, 1]))
-        tiled_y = tensorflow.tile(tensorflow.reshape(y, tensorflow.stack([1, y_size, dim])),
-                                  tensorflow.stack([x_size, 1, 1]))
-        return tensorflow.exp(
-            -tensorflow.reduce_mean(tensorflow.square(tiled_x - tiled_y), axis=2) / tensorflow.cast(dim,
-                                                                                                    tensorflow.float32))
-
-    @staticmethod
-    def compute_mmd(x, y):  # [batch_size, z_dim] [batch_size, z_dim]
-        """
-            Computes Maximum Mean Discrepancy(MMD) between x and y.
-
-            # Parameters
-                x: Tensor
-                    Tensor with shape [batch_size, z_dim]
-                y: Tensor
-                    Tensor with shape [batch_size, z_dim]
-
-            # Returns
-                returns the computed MMD between x and y
-        """
-        x_kernel = CVAE.compute_kernel(x, x)
-        y_kernel = CVAE.compute_kernel(y, y)
-        xy_kernel = CVAE.compute_kernel(x, y)
-        return tensorflow.reduce_mean(x_kernel) + tensorflow.reduce_mean(y_kernel) - 2 * tensorflow.reduce_mean(
-            xy_kernel)
+        self.x_hat = self._decoder()
 
     def _loss_function(self):
         """
@@ -229,27 +183,6 @@ class CVAE:
             data = data.A
         latent = self.sess.run(self.z_mean, feed_dict={self.x: data, self.y: labels,
                                                        self.size: data.shape[0], self.is_training: False})
-        return latent
-
-    def to_mmd_layer(self, data, labels):
-        """
-                    Map `data` in to the pn layer after latent layer. This function will feed data
-                    in encoder part of C-VAE and compute the latent space coordinates
-                    for each sample in data.
-
-                    # Parameters
-                        data: `~anndata.AnnData`
-                            Annotated data matrix to be mapped to latent space. `data.X` has to be in shape [n_obs, n_vars].
-                        labels: numpy nd-array
-                            `numpy nd-array` of labels to be fed as CVAE's condition array.
-
-                    # Returns
-                        latent: numpy nd-array
-                            returns array containing latent space encoding of 'data'
-                """
-
-        latent = self.sess.run(self.mmd_hl,  feed_dict={self.x: data, self.y: labels,
-                                                        self.size: data.shape[0], self.is_training: False})
         return latent
 
     def _reconstruct(self, data, labels, use_data=False):
