@@ -84,7 +84,7 @@ class CVAE:
             log_var = tensorflow.layers.dense(inputs=h, units=self.z_dim, kernel_initializer=self.init_w)
             return mean, log_var
 
-    def _mmd_decoder(self):
+    def _decoder(self):
         """
             Constructs the decoder sub-network of C-VAE. This function implements the
             decoder part of Variational Auto-encoder. It will transform constructed
