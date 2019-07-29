@@ -37,7 +37,7 @@ tensorflow, scanpy, numpy, matplotlib, scipy, wget.
 ```bash
 cd code/
 python DataDownloader.py
-python ModelTrainer.py
+python ModelTrainer.py all
 ```
 
 Then you can run each notebook and reproduce the results.
