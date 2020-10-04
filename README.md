@@ -1,4 +1,4 @@
-# Generative modeling and latent space arithmetics predict single-cell perturbation response across cell types, studies and species.
+# scGen predicts single-cell perturbations.
 
 <img align="center"  src="/sketch/sketch.png?raw=true">
 
